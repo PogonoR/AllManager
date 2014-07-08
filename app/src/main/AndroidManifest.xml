@@ -8,8 +8,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainList"
-            android:label="@string/app_name" >
+            android:name=".Notepad1"
+
+            android:label="@string/title_activity_notepad1" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
