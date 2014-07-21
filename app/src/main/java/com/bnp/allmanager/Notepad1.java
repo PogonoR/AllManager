@@ -32,6 +32,7 @@ public class Notepad1 extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        // here define actions on selected menu options
         switch (item.getItemId()) {
             case INSERT_ID:
                 createNote();
