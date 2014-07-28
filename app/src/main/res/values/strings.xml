@@ -7,5 +7,6 @@
     <string name="no_notes">No Notes Yet!</string>
     <string name="title_activity_notepad1">Notepad1</string>
     <string name="menu_insert">Add Item</string>
+    <string name="menu_delete">Delete Item</string>
 
 </resources>

@@ -3,15 +3,20 @@ package com.bnp.allmanager;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 
 public class Notepad1 extends ListActivity {
     public static final int INSERT_ID = Menu.FIRST;
+    public static final int DELETE_ID = Menu.FIRST + 1;
 
     private int mNoteNumber = 1;
     private NotesDbAdapter mDbHelper;
+    private Cursor mNotesCursor;
 
     /** Called when the activity is first created. */
     @Override
@@ -20,7 +25,8 @@ public class Notepad1 extends ListActivity {
         setContentView(R.layout.notepad_list);
         mDbHelper = new NotesDbAdapter(this);
         mDbHelper.open();
-        //fillData();
+        fillData();
+        registerForContextMenu(getListView());
     }
 
     @Override
@@ -31,7 +37,7 @@ public class Notepad1 extends ListActivity {
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
+    public boolean onOptionsItemSelected( MenuItem item) {
         // here define actions on selected menu options
         switch (item.getItemId()) {
             case INSERT_ID:
@@ -41,6 +47,24 @@ public class Notepad1 extends ListActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add(0, DELETE_ID, 0, R.string.menu_delete);
+    }
+
+    public boolean onContextItemSelected(MenuItem item){
+        switch (item.getItemId()){
+            case DELETE_ID:
+                AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                mDbHelper.deleteNote(info.id);
+                fillData();
+                return true;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+
     private void createNote() {
         String noteName = "Note " + mNoteNumber++;
         mDbHelper.createNote(noteName, "");
@@ -49,15 +73,15 @@ public class Notepad1 extends ListActivity {
 
     private void fillData() {
         // Get all of the notes from the database and create the item list
-        Cursor c = mDbHelper.fetchAllNotes();
-        startManagingCursor(c);
+        mNotesCursor = mDbHelper.fetchAllNotes();
+        startManagingCursor(mNotesCursor);
 
         String[] from = new String[] { NotesDbAdapter.KEY_TITLE };
         int[] to = new int[] { R.id.text1 };
 
         // Now create an array adapter and set it to display using our row
         SimpleCursorAdapter notes =
-                new SimpleCursorAdapter(this, R.layout.notes_row, c, from, to);
+                new SimpleCursorAdapter(this, R.layout.notes_row, mNotesCursor, from, to);
         setListAdapter(notes);
     }
 
