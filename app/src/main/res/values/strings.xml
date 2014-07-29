@@ -8,5 +8,9 @@
     <string name="title_activity_notepad1">Notepad1</string>
     <string name="menu_insert">Add Item</string>
     <string name="menu_delete">Delete Item</string>
+    <string name="edit_note">Edit Note</string>
+    <string name="title">Title</string>
+    <string name="body">Note...</string>
+    <string name="confirm">Confirm</string>
 
 </resources>

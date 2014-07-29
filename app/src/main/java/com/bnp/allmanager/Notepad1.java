@@ -1,6 +1,7 @@
 package com.bnp.allmanager;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -8,9 +9,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class Notepad1 extends ListActivity {
+    private static final int ACTIVITY_CREATE = 0;
+    private static final int ACTIVITY_EDIT = 1;
+
     public static final int INSERT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST + 1;
 
@@ -53,6 +58,7 @@ public class Notepad1 extends ListActivity {
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
     }
 
+
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case DELETE_ID:
@@ -64,11 +70,52 @@ public class Notepad1 extends ListActivity {
         return super.onContextItemSelected(item);
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        super.onListItemClick(l, v, position, id );
+        Cursor c = mNotesCursor;
+        c.moveToPosition(position);
+        Intent i = new Intent(this, NoteEdit.class);
+        i.putExtra(NotesDbAdapter.KEY_ROWID, id);
+        i.putExtra(NotesDbAdapter.KEY_TITLE, c.getString(
+                c.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE)));
+        i.putExtra(NotesDbAdapter.KEY_BODY, c.getString(
+                c.getColumnIndexOrThrow(NotesDbAdapter.KEY_BODY)));
+        startActivityForResult(i,ACTIVITY_EDIT);
+    }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent){
+        super.onActivityResult(requestCode, resultCode, intent);
+        Bundle extras = intent.getExtras();
+
+        switch (requestCode) {
+            case ACTIVITY_CREATE:
+            String title = extras.getString(NotesDbAdapter.KEY_TITLE);
+            String body = extras.getString(NotesDbAdapter.KEY_BODY);
+            mDbHelper.createNote(title, body);
+            fillData();
+            break;
+            case ACTIVITY_EDIT:
+                Long mRowId = extras.getLong(NotesDbAdapter.KEY_ROWID);
+                if (mRowId != null) {
+                    String editTitle = extras.getString(NotesDbAdapter.KEY_TITLE);
+                    String editBody = extras.getString(NotesDbAdapter.KEY_BODY);
+                    mDbHelper.updateNote(mRowId, editTitle, editBody);
+                }
+            fillData();
+            break;
+        }
+
+    }
 
     private void createNote() {
-        String noteName = "Note " + mNoteNumber++;
-        mDbHelper.createNote(noteName, "");
-        fillData();
+        //String noteName = "Note " + mNoteNumber++;
+        //mDbHelper.createNote(noteName, "");
+        //fillData();
+
+        Intent i = new Intent(this, NoteEdit.class);
+        startActivityForResult(i, ACTIVITY_CREATE);
+
     }
 
     private void fillData() {

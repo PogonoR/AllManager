@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<navigationModel
+  ns = "http://schemas.android.com?import=com.android.navigation.*">
+  <locations  
+    class = "java.util.ArrayList">
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.bnp.allmanager.NoteEdit">
+        <location        
+          id = "point0"        
+          x = "0"        
+          y = "0"/>
+      </key>
+      <value      
+        x = "1280"      
+        y = "640"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = "com.bnp.allmanager.Notepad1">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "160"      
+        y = "160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = ".Notepad1">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "160"      
+        y = "-160"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+    <entry>
+      <key      
+        class = "com.android.navigation.ActivityState"      
+        className = ".NoteEdit">
+        <location        
+          idref = "point0"/>
+      </key>
+      <value      
+        x = "960"      
+        y = "1120"      
+        class = "com.android.navigation.Point"/>
+    </entry>
+  </locations>
+</navigationModel>
