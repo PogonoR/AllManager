@@ -36,6 +36,7 @@ import android.util.Log;
  */
 public class NotesDbAdapter {
 
+
     public static final String KEY_TITLE = "title";
     public static final String KEY_BODY = "body";
     public static final String KEY_ROWID = "_id";

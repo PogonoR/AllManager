@@ -73,21 +73,26 @@ public class Notepad1 extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id );
+        /*
         Cursor c = mNotesCursor;
         c.moveToPosition(position);
+        */
+
         Intent i = new Intent(this, NoteEdit.class);
         i.putExtra(NotesDbAdapter.KEY_ROWID, id);
+        /*
         i.putExtra(NotesDbAdapter.KEY_TITLE, c.getString(
                 c.getColumnIndexOrThrow(NotesDbAdapter.KEY_TITLE)));
         i.putExtra(NotesDbAdapter.KEY_BODY, c.getString(
                 c.getColumnIndexOrThrow(NotesDbAdapter.KEY_BODY)));
+        */
         startActivityForResult(i,ACTIVITY_EDIT);
     }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         super.onActivityResult(requestCode, resultCode, intent);
         Bundle extras = intent.getExtras();
-
+/*
         switch (requestCode) {
             case ACTIVITY_CREATE:
             String title = extras.getString(NotesDbAdapter.KEY_TITLE);
@@ -105,6 +110,8 @@ public class Notepad1 extends ListActivity {
             fillData();
             break;
         }
+        */
+        fillData();
 
     }
 
@@ -120,7 +127,7 @@ public class Notepad1 extends ListActivity {
 
     private void fillData() {
         // Get all of the notes from the database and create the item list
-        mNotesCursor = mDbHelper.fetchAllNotes();
+        //mNotesCursor = mDbHelper.fetchAllNotes();
         startManagingCursor(mNotesCursor);
 
         String[] from = new String[] { NotesDbAdapter.KEY_TITLE };
