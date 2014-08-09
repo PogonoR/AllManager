@@ -19,7 +19,7 @@ public class Notepad1 extends ListActivity {
     public static final int INSERT_ID = Menu.FIRST;
     public static final int DELETE_ID = Menu.FIRST + 1;
 
-    private int mNoteNumber = 1;
+    //private int mNoteNumber = 1;
     private NotesDbAdapter mDbHelper;
     private Cursor mNotesCursor;
 
@@ -34,11 +34,26 @@ public class Notepad1 extends ListActivity {
         registerForContextMenu(getListView());
     }
 
+    private void fillData() {
+        // Get all of the notes from the database and create the item list
+        //mNotesCursor = mDbHelper.fetchAllNotes();
+        Cursor notesCursor = mDbHelper.fetchAllNotes();
+        startManagingCursor(notesCursor);
+
+        String[] from = new String[] { NotesDbAdapter.KEY_TITLE };
+        int[] to = new int[] { R.id.text1 };
+
+        // Now create an array adapter and set it to display using our row
+        SimpleCursorAdapter notes =
+                new SimpleCursorAdapter(this, R.layout.notes_row, notesCursor, from, to);
+        setListAdapter(notes);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        boolean result = super.onCreateOptionsMenu(menu);
+        super.onCreateOptionsMenu(menu);
         menu.add(0, INSERT_ID, 0, R.string.menu_insert);
-        return result;
+        return true;
     }
 
     @Override
@@ -58,7 +73,7 @@ public class Notepad1 extends ListActivity {
         menu.add(0, DELETE_ID, 0, R.string.menu_delete);
     }
 
-
+    @Override
     public boolean onContextItemSelected(MenuItem item){
         switch (item.getItemId()){
             case DELETE_ID:
@@ -88,10 +103,11 @@ public class Notepad1 extends ListActivity {
         */
         startActivityForResult(i,ACTIVITY_EDIT);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent){
         super.onActivityResult(requestCode, resultCode, intent);
-        Bundle extras = intent.getExtras();
+        //Bundle extras = intent.getExtras();
 /*
         switch (requestCode) {
             case ACTIVITY_CREATE:
@@ -125,18 +141,6 @@ public class Notepad1 extends ListActivity {
 
     }
 
-    private void fillData() {
-        // Get all of the notes from the database and create the item list
-        //mNotesCursor = mDbHelper.fetchAllNotes();
-        startManagingCursor(mNotesCursor);
 
-        String[] from = new String[] { NotesDbAdapter.KEY_TITLE };
-        int[] to = new int[] { R.id.text1 };
-
-        // Now create an array adapter and set it to display using our row
-        SimpleCursorAdapter notes =
-                new SimpleCursorAdapter(this, R.layout.notes_row, mNotesCursor, from, to);
-        setListAdapter(notes);
-    }
 
 }
