@@ -9,7 +9,6 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".Notepad1"
-
             android:label="@string/title_activity_notepad1" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,9 +16,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NoteEdit">
-
+        <activity android:name=".NoteEdit" >
         </activity>
+
+        <receiver android:name=".AllManagerWidget" >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/all_manager_widget_info" />
+        </receiver>
     </application>
 
 </manifest>
