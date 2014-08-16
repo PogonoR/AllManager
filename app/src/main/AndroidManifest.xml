@@ -18,6 +18,9 @@
         </activity>
         <activity android:name=".NoteEdit" >
         </activity>
+        <service
+            android:name=".WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <receiver android:name=".AllManagerWidget" >
             <intent-filter>
