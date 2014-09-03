@@ -23,14 +23,15 @@ public class AllManagerWidget extends AppWidgetProvider {
          * your homescreen*/
         final int N = appWidgetIds.length;
         for (int i=0; i<N; i++) {
-            RemoteViews remoteViews = updateWidgetListView(context, appWidgetIds[i]);
+			updateAppWidget(context, appWidgetManager, appWidgetIds[i]);
+            /*RemoteViews remoteViews = updateWidgetListView(context, appWidgetIds[i]);
             appWidgetManager.updateAppWidget(appWidgetIds[i], remoteViews);
-
+*/
         }
         super.onUpdate(context, appWidgetManager, appWidgetIds);
     }
 
-private RemoteViews updateWidgetListView(Context context, int appWidgetId){
+/*private RemoteViews updateWidgetListView(Context context, int appWidgetId){
     //which layout to show on widget
     RemoteViews remoteViews = new RemoteViews(
             context.getPackageName(),R.layout.all_manager_widget);
@@ -49,6 +50,7 @@ private RemoteViews updateWidgetListView(Context context, int appWidgetId){
     remoteViews.setEmptyView(R.id.listViewWidget, R.id.appwidget_text);
     return remoteViews;
 }
+*/
 
     @Override
     public void onEnabled(Context context) {
